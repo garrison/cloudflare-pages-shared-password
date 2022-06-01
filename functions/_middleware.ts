@@ -38,9 +38,7 @@ export async function onRequest({ request, next }) {
     const { user, pass } = basicAuthentication(request);
     if (user === BASIC_USER && pass === BASIC_PASS) {
       const response = await next();
-      const newResponse = response.clone();
-      newResponse.headers.set('Cache-Control', 'no-store');
-      return newResponse;
+      return response
     }
   }
 
