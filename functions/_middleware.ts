@@ -17,7 +17,7 @@ const BASIC_PASS = 'admin';
  * @param {Context} context
  * @returns {Promise<Response>}
  */
-export async function handleRequest({ request, next }) {
+export async function onRequest({ request, next }) {
   const { protocol, pathname } = new URL(request.url);
 
   // In the case of a Basic authentication, the exchange
