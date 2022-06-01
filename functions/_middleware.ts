@@ -35,15 +35,13 @@ export async function onRequest({ request, next }) {
 
   // The "Authorization" header is sent when authenticated.
   if (request.headers.has('Authorization')) {
-    // Throws exception when authorization fails.
     const { user, pass } = basicAuthentication(request);
-    verifyCredentials(user, pass);
-
-    // Only returns this response when no exception is thrown.
-    const response = await next();
-    const newResponse = response.clone();
-    newResponse.headers.set('Cache-Control', 'no-store');
-    return newResponse;
+    if (user === BASIC_USER && pass === BASIC_PASS) {
+      const response = await next();
+      const newResponse = response.clone();
+      newResponse.headers.set('Cache-Control', 'no-store');
+      return newResponse;
+    }
   }
 
   // Not authenticated.
@@ -54,22 +52,6 @@ export async function onRequest({ request, next }) {
       'WWW-Authenticate': 'Basic realm="my scope", charset="UTF-8"',
     },
   });
-}
-
-/**
- * Throws exception on verification failure.
- * @param {string} user
- * @param {string} pass
- * @throws {UnauthorizedException}
- */
-function verifyCredentials(user, pass) {
-  if (BASIC_USER !== user) {
-    throw new UnauthorizedException('Invalid username.');
-  }
-
-  if (BASIC_PASS !== pass) {
-    throw new UnauthorizedException('Invalid password.');
-  }
 }
 
 /**
@@ -108,15 +90,6 @@ function basicAuthentication(request) {
     user: decoded.substring(0, index),
     pass: decoded.substring(index + 1),
   };
-}
-
-class UnauthorizedException extends Error {
-  constructor(reason) {
-    super(reason);
-    this.status = 401;
-    this.statusText = 'Unauthorized';
-    this.reason = reason;
-  }
 }
 
 class BadRequestException extends Error {
