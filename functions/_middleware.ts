@@ -41,8 +41,9 @@ export async function onRequest({ request, next }) {
 
     // Only returns this response when no exception is thrown.
     const response = await next();
-    response.headers.set('Cache-Control', 'no-store');
-    return response;
+    const newResponse = response.clone();
+    newResponse.headers.set('Cache-Control', 'no-store');
+    return newResponse;
   }
 
   // Not authenticated.
@@ -109,14 +110,20 @@ function basicAuthentication(request) {
   };
 }
 
-function UnauthorizedException(reason) {
-  this.status = 401;
-  this.statusText = 'Unauthorized';
-  this.reason = reason;
+class UnauthorizedException extends Error {
+  constructor(reason) {
+    super(reason);
+    this.status = 401;
+    this.statusText = 'Unauthorized';
+    this.reason = reason;
+  }
 }
 
-function BadRequestException(reason) {
-  this.status = 400;
-  this.statusText = 'Bad Request';
-  this.reason = reason;
+class BadRequestException extends Error {
+  constructor(reason) {
+    super(reason);
+    this.status = 400;
+    this.statusText = 'Bad Request';
+    this.reason = reason;
+  }
 }
