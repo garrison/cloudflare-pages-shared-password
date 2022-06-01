@@ -1,5 +1,5 @@
-// Mash-up of https://developers.cloudflare.com/workers/examples/basic-auth/
-// and https://developers.cloudflare.com/pages/platform/functions
+// Mash-up of https://developers.cloudflare.com/workers/examples/basic-auth/ and
+// https://developers.cloudflare.com/pages/platform/functions#exporting-middleware
 
 /**
  * Shows how to restrict access using the HTTP Basic schema.
