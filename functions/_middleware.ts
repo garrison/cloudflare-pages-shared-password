@@ -23,7 +23,7 @@ export async function onRequest({ request, next }) {
   // In the case of a Basic authentication, the exchange
   // MUST happen over an HTTPS (TLS) connection to be secure.
   if ('https:' !== protocol || 'https' !== request.headers.get('x-forwarded-proto')) {
-    throw new BadRequestException('Please use a HTTPS connection.');
+    return new Response('Please use a HTTPS connection.', { status: 403 });
   }
 
   if (pathname == '/logout') {
