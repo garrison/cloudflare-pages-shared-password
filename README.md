@@ -4,7 +4,7 @@ This repository demonstrates a static site which is hosted on Cloudflare Pages a
 
 This demonstration site is hosted at https://cloudflare-pages-shared-password.pages.dev/, with `admin` as both the username and password.
 
-The static site in this repository is built using [Hugo](https://gohugo.io/), but the middleware can be used with any static site hosted on Cloudflare Pages.
+The static site in this repository is built using [Hugo](https://developers.cloudflare.com/pages/framework-guides/deploy-a-hugo-site/), but the middleware can be used with any static site hosted on Cloudflare Pages.
 
 ## [Non]-Security
 
